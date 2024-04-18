@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_practice/screens/location_screen.dart';
 import 'package:weather_practice/services/location.dart';
 import 'package:weather_practice/services/networking.dart';
 
@@ -22,7 +23,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   void getLocationData() async {
     Location location = Location();
-    location.getCurrentLocation();
+    await location.getCurrentLocation();
     latitude = location.latitude;
     longitude = location.longitude;
     NetworkHelper networkHelper = NetworkHelper(
@@ -30,7 +31,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     var weatherData = await networkHelper.getData();
 
-    
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return const LocationScreen();
+        },
+      ),
+    );
   }
 
   @override
